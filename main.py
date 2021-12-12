@@ -31,6 +31,8 @@ def download_directory():
     kaggle.api.dataset_download_files('aminizahra/leaf-edge', path='.', unzip=True)
 
 
+
+
 def get_dataset():
     def image_parser(filename, label):
         image_str = tf.io.read_file(filename)
@@ -78,20 +80,20 @@ def get_dataset():
 
 
 def train_and_evaluate_model(train, test):
-    from model import model_v1 as create_model
+    from model import model_v2 as create_model
 
     inputs, outputs = create_model()
     model = keras.Model(inputs, outputs)
 
     model.compile(
-        optimizer=keras.optimizers.Adam(learning_rate=0.5),
+        optimizer=keras.optimizers.Adam(learning_rate=0.0001),
         loss=keras.losses.CategoricalCrossentropy(),
         metrics=['accuracy']
     )
 
     history = model.fit(
         train,
-        epochs=200,
+        epochs=25,
         verbose=2,
         validation_data=test
     )
